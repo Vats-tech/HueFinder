@@ -44,9 +44,15 @@ const Home = () => {
   const [showToast, setToastStatus] = useState(false);
 
   /**
-   * Hold copied text to clipboard
+   * Holds copied text to clipboard
    */
   const [copiedText, setCopiedText] = useState();
+
+  /**
+   * Holds toast message
+   */
+
+  const [toast, setToast] = useState({ type: "success", message: "" });
 
   /**
    * Get user input.
@@ -86,6 +92,12 @@ const Home = () => {
       setColors(colors);
       setLoading(false);
     } catch (error) {
+      setToast({
+        type: "error",
+        message: "Something went wrong. Please try again",
+      });
+      setToastStatus(true);
+      closeToast();
       setLoading(false);
     }
   };
@@ -107,6 +119,10 @@ const Home = () => {
       .then(() => {
         // Success message
         setCopiedText(hexValue);
+        setToast({
+          type: "success",
+          message: `Color copied to clipboard: ${copiedText}`,
+        });
         setToastStatus(true);
         closeToast();
       })
@@ -146,8 +162,8 @@ const Home = () => {
       )}
       {showToast && (
         <div className="toast toast-top">
-          <div className="alert alert-success">
-            <span>Color copied to clipboard: {copiedText}</span>
+          <div className={`alert alert-${toast.type}`}>
+            <span>{toast.message}</span>
           </div>
         </div>
       )}
