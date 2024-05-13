@@ -121,7 +121,7 @@ const Home = () => {
         setCopiedText(hexValue);
         setToast({
           type: "success",
-          message: `Color copied to clipboard: ${copiedText}`,
+          message: `Color copied to clipboard: ${hexValue}`,
         });
         setToastStatus(true);
         closeToast();
