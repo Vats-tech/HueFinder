@@ -28,7 +28,7 @@ const Cards = ({ color, copyTextToClipboard }) => {
 
   return (
     <div
-      className="p-12 rounded-md text-center relative uppercase "
+      className="flex justify-center items-center p-12 rounded-md text-center relative uppercase "
       style={{
         backgroundColor: `${color}`,
       }}
@@ -43,7 +43,7 @@ const Cards = ({ color, copyTextToClipboard }) => {
           {getCopyIcon()}
         </button>
       )}
-      <span className="text-lg text-white">{color}</span>
+      <span className="text-sm md:text-lg lg:text-lg text-white">{color}</span>
     </div>
   );
 };
