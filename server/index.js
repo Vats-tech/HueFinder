@@ -12,7 +12,6 @@ app.use(cors());
 app.get("/:keyword", async (req, res) => {
   const keyword = req.params.keyword;
   const apiKey = process.env.API_KEY;
-  console.log(apiKey);
   const serachType = "image";
   const baseURL = "https://www.googleapis.com/customsearch/v1";
   const url = `${baseURL}?key=${apiKey}&q=${encodeURIComponent(
@@ -46,7 +45,7 @@ app.get("/:keyword", async (req, res) => {
     .catch((error) => {
       // Handle errors
       console.error(error);
-      res.status(500).json({ error: "Internal server error" });
+      res.status(422).json({ error: "Internal server error" });
     });
 });
 

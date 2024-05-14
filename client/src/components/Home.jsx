@@ -64,12 +64,43 @@ const Home = () => {
   };
 
   /**
+   * Handler to close the toast.
+   */
+  const closeToast = () => {
+    setTimeout(() => setToastStatus(false), 1000);
+  };
+
+  /**
    * Handle submit action on form.
    * @param {*} event
    */
   const handleSubmit = (event) => {
     event.preventDefault();
     fetchColors();
+  };
+
+  /**
+   * Handle failure of api. Show required toast.
+   * @param {*} error
+   */
+  const handleAPIError = (error) => {
+    console.log("Here", error);
+    if (error?.status === 422) {
+      setToast({
+        type: "error",
+        message:
+          "Please input valid text only. Support for all text types will be added later",
+      });
+    } else {
+      setToast({
+        type: "error",
+        message: "Something went wrong. Please try again",
+      });
+    }
+
+    setToastStatus(true);
+    closeToast();
+    setLoading(false);
   };
 
   /**
@@ -92,21 +123,8 @@ const Home = () => {
       setColors(colors);
       setLoading(false);
     } catch (error) {
-      setToast({
-        type: "error",
-        message: "Something went wrong. Please try again",
-      });
-      setToastStatus(true);
-      closeToast();
-      setLoading(false);
+      handleAPIError(error.response);
     }
-  };
-
-  /**
-   * Handler to close the toast.
-   */
-  const closeToast = () => {
-    setTimeout(() => setToastStatus(false), 1000);
   };
 
   /**
@@ -175,24 +193,24 @@ const Home = () => {
       <div className="w-8/12 mx-auto">
         <form
           onSubmit={handleSubmit}
-          className="flex justify-center items-center"
+          className="flex justify-center items-center flex-col lg:flex-row"
         >
           <input
             type="text"
             required
             placeholder="Type here to discover the color"
-            className="input input-primary w-full  mr-9"
+            className="input input-primary w-full  lg:mr-9"
             onChange={onInput}
           />
           <button
             type="submit"
-            className="btn btn-outline btn-primary btn-wide"
+            className="w-32 btn btn-outline btn-primary lg:btn-wide mt-10 lg:mt-0"
           >
-            Primary
+            Search
           </button>
         </form>
 
-        <div className="grid gap-4 grid-cols-4 pt-10">
+        <div className="grid gap-4 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 pt-10">
           {colors.map((color, index) => {
             return (
               <Cards
