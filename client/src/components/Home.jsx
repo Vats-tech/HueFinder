@@ -185,12 +185,12 @@ const Home = () => {
           </div>
         </div>
       )}
-      <div className="flex justify-center items-center p-10">
+      <div className="flex justify-center items-center p-6 xsm:p-10">
         <h1 className="text-5xl subpixel-antialiased font-extralight">
           Hue Finder
         </h1>
       </div>
-      <div className="w-8/12 mx-auto">
+      <div className="w-10/12 md:w-8/12 mx-auto">
         <form
           onSubmit={handleSubmit}
           className="flex justify-center items-center flex-col lg:flex-row"
