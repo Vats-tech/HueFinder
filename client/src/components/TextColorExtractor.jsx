@@ -62,7 +62,6 @@ const TextColorExtractor = ({
    * @param {*} error
    */
   const handleAPIError = (error) => {
-    console.log("Here", error);
     if (error?.status === 422) {
       setToast({
         type: "error",

@@ -30,7 +30,6 @@ const ImageReader = () => {
   const setColorPlatteOfImage = (img) => {
     const colorThief = new ColorThief();
     const palette = colorThief.getPalette(img);
-    console.log("Palette", palette);
     setColorPalette(palette);
   };
 
@@ -42,7 +41,7 @@ const ImageReader = () => {
     if (img.complete) {
       setColorPlatteOfImage(img);
     } else {
-      image.addEventListener("load", function () {
+      img.addEventListener("load", function () {
         setColorPlatteOfImage(img);
       });
     }
