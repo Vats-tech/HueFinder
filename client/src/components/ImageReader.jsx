@@ -1,6 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import BaseImage from "../../public/BaseImage.jpg?url";
-import ColorThief from "colorthief";
+import { fetchColorPalette } from "./utils/util";
+import Details from "./Detaills";
+import {
+  DEMO_COLORS,
+  DESCRIPTION,
+  HUE_EXTRACTOR_TYPE,
+} from "./utils/constants";
 
 const ImageReader = () => {
   /**
@@ -24,27 +30,19 @@ const ImageReader = () => {
   const [colorPalette, setColorPalette] = useState();
 
   /**
-   * Set the color palette of image
-   * @param {*} img - Image
-   */
-  const setColorPlatteOfImage = (img) => {
-    const colorThief = new ColorThief();
-    const palette = colorThief.getPalette(img);
-    setColorPalette(palette);
-  };
-
-  /**
    * Get the color palette of the image
    */
   const getAllColorPlatte = () => {
     const img = document.querySelector("img");
+    let palette = [];
     if (img.complete) {
-      setColorPlatteOfImage(img);
+      palette = fetchColorPalette(img);
     } else {
       img.addEventListener("load", function () {
-        setColorPlatteOfImage(img);
+        palette = fetchColorPalette(img);
       });
     }
+    setColorPalette(palette);
   };
 
   /**
@@ -59,7 +57,8 @@ const ImageReader = () => {
       image.src = e.target.result;
       image.onload = function () {
         setImage(e.target.result);
-        getAllColorPlatte(e.target.result);
+        const palette = getAllColorPlatte(e.target.result);
+        setColorPalette(palette);
       };
     };
     reader.readAsDataURL(file);
@@ -97,46 +96,55 @@ const ImageReader = () => {
   }, []);
 
   return (
-    <div className="w-full lg:flex lg:justify-between lg:gap-10 lg:flex-row md:mt-0">
-      <div id="imageContainer" className="w-full lg:w-1/2">
-        {image && (
-          <img
-            src={image}
-            alt="Uploaded"
-            className="rounded-lg cursor-pointer"
-            onMouseMove={handleMouseMove}
-            onClick={handleClickOnImage}
-          />
-        )}
-      </div>
-      <div className="flex justify-evenly items-center flex-col md:max-w-d mt-10">
-        <div className="w-full">
-          <input
-            type="file"
-            className="file-input file-input-bordered file-input-accent w-full "
-            onChange={onImageUpload}
-          />
-        </div>
+    <div>
+      <Details
+        demoColors={DEMO_COLORS.IMG_TO_COL}
+        description={DESCRIPTION.IMAGE_COLOR_EXTRACTOR}
+        hueExtractorType={HUE_EXTRACTOR_TYPE.IMAGE_COLOR_EXTRACTOR}
+      />
 
-        <div className="flex justify-between mt-10 w-full">
-          <div
-            className="w-20 min-h-3 rounded-md mr-1 md:mr-4"
-            style={{
-              backgroundColor: `${color}`,
-            }}
-          ></div>
-          <div
-            className="w-20 min-h-3 rounded-md mr-1 md:mr-4"
-            style={{
-              backgroundColor: `${selectedColor}`,
-            }}
-          ></div>
-          <div
-            id="colorDisplay"
-            className="w-full flex justify-around items-center bg-white min-h-12 font-light font-mono rounded-lg"
-          >
-            <div className="md:w-40">
-              <pre>RGB {selectedColor}</pre>
+      <div className="w-full lg:flex lg:justify-between lg:gap-10 lg:flex-row md:mt-0">
+        <div id="imageContainer" className="w-full lg:w-1/2">
+          {image && (
+            <img
+              src={image}
+              alt="Uploaded"
+              className="rounded-lg cursor-pointer"
+              onMouseMove={handleMouseMove}
+              onClick={handleClickOnImage}
+            />
+          )}
+        </div>
+        <div className="flex justify-evenly items-center flex-col md:max-w-d mt-10">
+          <div className="w-full">
+            <input
+              type="file"
+              className="file-input file-input-bordered file-input-accent w-full "
+              onChange={onImageUpload}
+            />
+          </div>
+
+          <div className="flex justify-between mt-10 w-full">
+            <div
+              className="w-20 min-h-3 rounded-md mr-1 md:mr-4"
+              style={{
+                backgroundColor: `${color}`,
+              }}
+            ></div>
+            <div
+              className="w-20 min-h-3 rounded-md mr-1 md:mr-4"
+              style={{
+                backgroundColor: `${selectedColor}`,
+              }}
+            ></div>
+            <div
+              id="colorDisplay"
+              className="w-full flex justify-around items-center bg-white min-h-12 font-light font-mono rounded-lg"
+            >
+              <div className="md:w-40">
+                <pre>RGB {selectedColor}</pre>
+              </div>
+              {/* TODO - Show all color palette here*/}
             </div>
           </div>
         </div>

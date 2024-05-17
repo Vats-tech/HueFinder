@@ -81,7 +81,7 @@ const Home = () => {
           </div>
         </nav>
       </header>
-      <div className="w-10/12 md:w-8/12 mx-auto">
+      <div className="w-11/12 md:w-8/12 mx-auto">
         <Tabs
           allTabs={allTabs}
           activeTab={activeTab}

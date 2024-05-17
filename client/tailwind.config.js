@@ -7,7 +7,7 @@ export default {
   plugins: [require("daisyui")],
   theme: {
     screens: {
-      xsm: "320px",
+      xsm: "420px",
       sm: "640px",
       md: "768px",
       lg: "1024px",

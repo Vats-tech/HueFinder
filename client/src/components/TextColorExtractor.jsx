@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { getColorData as getColorData } from "./api/ColorAPI";
 import Cards from "./Cards";
+import Details from "./Detaills";
+import {
+  DEMO_COLORS,
+  DESCRIPTION,
+  HUE_EXTRACTOR_TYPE,
+} from "./utils/constants";
 
 const TextColorExtractor = ({
   setLoading,
@@ -150,24 +156,33 @@ const TextColorExtractor = ({
 
   return (
     <div className="w-full">
-      <form
-        onSubmit={handleSubmit}
-        className="flex justify-center items-center flex-col lg:flex-row"
-      >
-        <input
-          type="text"
-          required
-          placeholder="Type here to discover the color"
-          className="input input-primary w-full  lg:mr-9"
-          onChange={onInput}
-        />
-        <button
-          type="submit"
-          className="w-32 btn btn-outline btn-primary lg:btn-wide mt-10 lg:mt-0"
-        >
-          Search
-        </button>
-      </form>
+      <Details
+        demoColors={DEMO_COLORS.TEXT_TO_COL}
+        description={DESCRIPTION.TEXT_COLOR_EXTRACTOR}
+        hueExtractorType={HUE_EXTRACTOR_TYPE.TEXT_COLOR_EXTRACTOR}
+      />
+      <div className="card lg:card-side bg-base-100 shadow-xl">
+        <div className="card-body">
+          <form
+            onSubmit={handleSubmit}
+            className="flex justify-center items-center flex-col lg:flex-row"
+          >
+            <input
+              type="text"
+              required
+              placeholder="Type here to discover the color"
+              className="input input-primary w-full  lg:mr-9"
+              onChange={onInput}
+            />
+            <button
+              type="submit"
+              className="w-32 btn btn-outline btn-primary lg:btn-wide mt-10 lg:mt-0"
+            >
+              Search
+            </button>
+          </form>
+        </div>
+      </div>
 
       <div className="grid gap-4 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 pt-10">
         {colors.map((color, index) => {
