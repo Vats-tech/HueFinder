@@ -21,7 +21,7 @@ const Tabs = ({ allTabs, activeTab, onChangeTab }) => {
             onClick={() => onChangeTab(Number(tabIndex))}
             checked={Number(tabIndex) === activeTab}
           />
-          <div role="tabpanel" className="tab-content pt-10 w-64 xsm:w-full">
+          <div role="tabpanel" className="tab-content pt-10">
             {renderActiveTab()}
           </div>
         </>

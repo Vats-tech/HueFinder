@@ -97,8 +97,8 @@ const ImageReader = () => {
   }, []);
 
   return (
-    <div className="w-full flex justify-between flex-col gap-10 lg:flex-row md:mt-0">
-      <div id="imageContainer" className="lg:max-w-md">
+    <div className="w-full lg:flex lg:justify-between lg:gap-10 lg:flex-row md:mt-0">
+      <div id="imageContainer" className="w-full lg:w-1/2">
         {image && (
           <img
             src={image}
@@ -109,7 +109,7 @@ const ImageReader = () => {
           />
         )}
       </div>
-      <div className="flex justify-evenly items-center flex-col md:max-w-d">
+      <div className="flex justify-evenly items-center flex-col md:max-w-d mt-10">
         <div className="w-full">
           <input
             type="file"
