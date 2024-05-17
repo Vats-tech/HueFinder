@@ -7,6 +7,7 @@ import {
   DESCRIPTION,
   HUE_EXTRACTOR_TYPE,
 } from "./utils/constants";
+import { getHexFromRGB } from "./utils/util";
 
 const TextColorExtractor = ({
   setLoading,
@@ -131,27 +132,6 @@ const TextColorExtractor = ({
         // Error handling
         alert("Failed to copy text: ", err);
       });
-  };
-
-  /**
-   * Change value to hex value
-   * @param {*} value Color value (R,G,B)
-   * @returns
-   */
-  const changeToHexValue = (value) => {
-    const hex = Math.round(value).toString(16);
-    return hex.length == 1 ? "0" + hex : hex;
-  };
-
-  /**
-   * Change RGB to HEX
-   * @param {*} param0
-   * @returns Hex value
-   */
-  const getHexFromRGB = ({ r, g, b }) => {
-    return (
-      "#" + changeToHexValue(r) + changeToHexValue(g) + changeToHexValue(b)
-    );
   };
 
   return (
