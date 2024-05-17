@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import BaseImage from "../../public/BaseImage.jpg?url";
-import { fetchColorPalette } from "./utils/util";
+import { fetchColorPalette, getHexFromRGB } from "./utils/util";
 import Details from "./Detaills";
 import {
   DEMO_COLORS,
@@ -17,12 +17,12 @@ const ImageReader = () => {
   /**
    * Holds color of image
    */
-  const [color, setColor] = useState("rgb(12, 34, 123)");
+  const [color, setColor] = useState("#380132");
 
   /**
    * Holds selected color of image
    */
-  const [selectedColor, setSelectedColor] = useState("rgb(12, 34, 123)");
+  const [selectedColor, setSelectedColor] = useState("#380132");
 
   /**
    * Holds color palette.
@@ -80,8 +80,9 @@ const ImageReader = () => {
     ctx.drawImage(e.target, 0, 0, e.target.width, e.target.height);
 
     const pixel = ctx.getImageData(x, y, 1, 1).data;
-    const rgb = `rgb(${pixel[0]}, ${pixel[1]}, ${pixel[2]})`;
-    setColor(rgb);
+    const rgb = { r: pixel[0], g: pixel[1], b: pixel[2] };
+    const hex = getHexFromRGB(rgb);
+    setColor(hex);
   };
 
   /**
@@ -96,7 +97,7 @@ const ImageReader = () => {
   }, []);
 
   return (
-    <div>
+    <div className="w-full">
       <Details
         demoColors={DEMO_COLORS.IMG_TO_COL}
         description={DESCRIPTION.IMAGE_COLOR_EXTRACTOR}
@@ -141,11 +142,9 @@ const ImageReader = () => {
               id="colorDisplay"
               className="w-full flex justify-around items-center bg-white min-h-12 font-light font-mono rounded-lg"
             >
-              <div className="md:w-40">
-                <pre>RGB {selectedColor}</pre>
-              </div>
-              {/* TODO - Show all color palette here*/}
+              <pre>HEX {selectedColor}</pre>
             </div>
+            {/* TODO - Show all color palette here*/}
           </div>
         </div>
       </div>
