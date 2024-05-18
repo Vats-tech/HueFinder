@@ -1,7 +1,7 @@
 import BaseImage from "../../public/BaseImage.jpg?url";
 import { HUE_EXTRACTOR_TYPE } from "./utils/constants";
 
-const Details = ({ demoColors, description, hueExtractorType }) => {
+const Details = ({ heading, demoColors, description, hueExtractorType }) => {
   return (
     <div className="card lg:card-side bg-base-100 shadow-xl mb-20">
       <div className="w-2/5 p-10">
@@ -29,7 +29,7 @@ const Details = ({ demoColors, description, hueExtractorType }) => {
       </div>
 
       <div className="card-body">
-        <h2 className="card-title font-mono font-semibold">Text To Color</h2>
+        <h2 className="card-title font-mono font-semibold">{heading}</h2>
         <p className="font-mono font-extralight antialiased tracking-tight text-sm">
           {description}
         </p>
