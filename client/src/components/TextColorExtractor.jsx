@@ -5,6 +5,7 @@ import Details from "./Detaills";
 import {
   DEMO_COLORS,
   DESCRIPTION,
+  FEATURES_LABEL,
   HUE_EXTRACTOR_TYPE,
 } from "./utils/constants";
 import { getHexFromRGB } from "./utils/util";
@@ -138,6 +139,7 @@ const TextColorExtractor = ({
     <div className="w-full">
       <Details
         demoColors={DEMO_COLORS.TEXT_TO_COL}
+        heading={FEATURES_LABEL.TEXT_TO_COLOR}
         description={DESCRIPTION.TEXT_COLOR_EXTRACTOR}
         hueExtractorType={HUE_EXTRACTOR_TYPE.TEXT_COLOR_EXTRACTOR}
       />

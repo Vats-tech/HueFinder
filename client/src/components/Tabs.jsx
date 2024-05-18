@@ -15,7 +15,7 @@ const Tabs = ({ allTabs, activeTab, onChangeTab }) => {
             type="radio"
             name="my_tabs_1"
             role="tab"
-            className="tab "
+            className="tab font-mono text-base"
             style={{ width: "max-content" }}
             aria-label={allTabs[tabIndex].label}
             onClick={() => onChangeTab(Number(tabIndex))}

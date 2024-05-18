@@ -5,8 +5,15 @@ import ColorThief from "colorthief";
  */
 export const fetchColorPalette = (img) => {
   const colorThief = new ColorThief();
-  const palette = colorThief.getPalette(img);
-  return palette;
+  const palette = colorThief.getPalette(img, 10);
+  const helper = palette.reduce((acc, curr) => {
+    const r = curr[0];
+    const g = curr[1];
+    const b = curr[2];
+    acc.push(`rgb(${r},${g},${b})`);
+    return acc;
+  }, []);
+  return helper;
 };
 
 /**
