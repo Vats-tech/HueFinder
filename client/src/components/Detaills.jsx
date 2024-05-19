@@ -37,6 +37,7 @@ const Details = ({ heading, demoColors, description, hueExtractorType }) => {
           {demoColors.map((color) => {
             return (
               <div
+                key={color}
                 className="w-20 h-20 rounded-full"
                 style={{ backgroundColor: `${color}` }}
               ></div>

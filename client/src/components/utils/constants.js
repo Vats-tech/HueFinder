@@ -36,5 +36,5 @@ export const FEATURES_LABEL = {
  * LIX to enable and disable the features.
  */
 export const LIX = {
-  RGB_TO_HEX_CONVERTER: false,
+  RGB_TO_HEX_CONVERTER: true,
 };
