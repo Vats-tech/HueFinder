@@ -9,6 +9,7 @@ import {
   HUE_EXTRACTOR_TYPE,
   LIX,
 } from "./utils/constants";
+import ColorConverter from "./ColorConverter";
 
 const ImageReader = () => {
   /**
@@ -127,6 +128,7 @@ const ImageReader = () => {
                     {colorPalette.map((color) => {
                       return (
                         <div
+                          key={color}
                           className="w-12 h-12"
                           style={{
                             backgroundColor: color,
@@ -148,7 +150,7 @@ const ImageReader = () => {
                 <div className="">
                   <input
                     type="file"
-                    className="file-input file-input-bordered file-input-accent w-full "
+                    className="file-input file-input-bordered file-input-accent w-full font-mono"
                     onChange={onImageUpload}
                   />
                 </div>
@@ -175,37 +177,7 @@ const ImageReader = () => {
               </div>
             </div>
           </div>
-          {LIX.RGB_TO_HEX_CONVERTER && (
-            <div className="card lg:card-side bg-base-100 shadow-xl rounded-md">
-              <div className="card-body p-10 items-center">
-                <h3 className="flex items-center">
-                  <p className="mr-2 font-mono text-lg">RGB</p>
-                  <span>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      x="0px"
-                      y="0px"
-                      width="30"
-                      height="30"
-                      viewBox="0 0 50 50"
-                    >
-                      <path d="M 20 4 C 15.054545 4 11 8.0545455 11 13 L 11 35.585938 L 5.7070312 30.292969 L 4.2929688 31.707031 L 12 39.414062 L 19.707031 31.707031 L 18.292969 30.292969 L 13 35.585938 L 13 13 C 13 12.759091 13.01313 12.521884 13.037109 12.287109 C 13.396795 8.7654918 16.386364 6 20 6 L 30 6 L 30.5 6 L 30.5 4 L 30 4 L 20 4 z M 38 10.585938 L 30.292969 18.292969 L 31.707031 19.707031 L 37 14.414062 L 37 37 C 37 40.613636 34.234508 43.603205 30.712891 43.962891 C 30.478116 43.98687 30.240909 44 30 44 L 20 44 L 19.5 44 L 19.5 46 L 20 46 L 30 46 C 30.309091 46 30.614657 45.984029 30.916016 45.953125 C 35.436391 45.489569 39 41.636364 39 37 L 39 14.414062 L 44.292969 19.707031 L 45.707031 18.292969 L 38 10.585938 z"></path>
-                    </svg>
-                  </span>
-                  <p className="ml-2 font-mono text-lg">HEX</p>
-                </h3>
-                <input
-                  type="text"
-                  placeholder="Type here"
-                  className="input input-bordered input-accent w-full max-w-xs"
-                />
-                <button className="btn btn-accent w-32">Convert</button>
-                <div className="w-44 border-2 min-h-12 flex justify-center items-center">
-                  <spn>#683989</spn>
-                </div>
-              </div>
-            </div>
-          )}
+          {LIX.RGB_TO_HEX_CONVERTER && <ColorConverter />}
         </div>
       </div>
     </div>

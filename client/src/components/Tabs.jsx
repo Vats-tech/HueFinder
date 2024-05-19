@@ -1,3 +1,5 @@
+import { Fragment } from "react";
+
 const Tabs = ({ allTabs, activeTab, onChangeTab }) => {
   /**
    * Render current active tab.
@@ -8,9 +10,9 @@ const Tabs = ({ allTabs, activeTab, onChangeTab }) => {
   };
 
   return (
-    <div role="tablist" className="tabs tabs-bordered">
+    <div role="tablist" className="tabs tabs-bordered justify-center">
       {Object.keys(allTabs).map((tabIndex) => (
-        <>
+        <Fragment key={tabIndex}>
           <input
             type="radio"
             name="my_tabs_1"
@@ -21,10 +23,10 @@ const Tabs = ({ allTabs, activeTab, onChangeTab }) => {
             onClick={() => onChangeTab(Number(tabIndex))}
             checked={Number(tabIndex) === activeTab}
           />
-          <div role="tabpanel" className="tab-content pt-10">
+          <div role="tabpanel" className="tab-content pt-10" key={tabIndex}>
             {renderActiveTab()}
           </div>
-        </>
+        </Fragment>
       ))}
     </div>
   );

@@ -88,7 +88,8 @@ const Home = () => {
           onChangeTab={onChangeTab}
         />
       </div>
-      <footer className="footer footer-center p-10  mt-40 bg-gradient-to-r from-purple-500 to-pink-400 text-primary-content text-white">
+      <div className="divider mt-40"></div>
+      <footer className="footer footer-center p-10 text-primary-content text-white">
         <aside>
           <svg
             width="50"
