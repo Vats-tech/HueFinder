@@ -115,7 +115,7 @@ const ImageReader = () => {
               {image && (
                 <img
                   src={image}
-                  alt="Uploaded"
+                  alt="Image for color extraction"
                   className="rounded-t cursor-pointer"
                   onMouseMove={handleMouseMove}
                   onClick={handleClickOnImage}
@@ -143,7 +143,7 @@ const ImageReader = () => {
           </div>
         </div>
 
-        <div className="flex flex-col gap-10 mt-10 lg:mt-0">
+        <div className="flex justify-between flex-col gap-10 mt-10 lg:mt-0">
           <div className="card lg:card-side bg-base-100 shadow-xl rounded-md">
             <div className="card-body p-0">
               <div className="flex justify-evenly items-center flex-col md:max-w-d p-4 md:p-6 lg:p-10 gap-6">
@@ -154,7 +154,7 @@ const ImageReader = () => {
                     onChange={onImageUpload}
                   />
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between w-full">
                   <div
                     className="w-20 min-h-3 rounded-md mr-1 md:mr-4"
                     style={{
