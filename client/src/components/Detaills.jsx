@@ -3,7 +3,7 @@ import { HUE_EXTRACTOR_TYPE } from "./utils/constants";
 
 const Details = ({ heading, demoColors, description, hueExtractorType }) => {
   return (
-    <div className="card lg:card-side bg-base-100 shadow-xl mb-20">
+    <div className="card lg:card-side shadow-xl mb-20">
       <div className="w-2/5 p-10">
         <div className="indicator">
           <div className="indicator-item indicator-bottom">

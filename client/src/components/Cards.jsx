@@ -28,7 +28,7 @@ const Cards = ({ color, copyTextToClipboard }) => {
 
   return (
     <div
-      className="flex justify-center items-center p-12 rounded-md text-center relative uppercase "
+      className="flex justify-center items-center p-12 rounded-md text-center relative uppercase color-card"
       style={{
         backgroundColor: `${color}`,
       }}

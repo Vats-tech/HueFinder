@@ -4,6 +4,7 @@ import Cards from "./Cards";
 import ImageReader from "./ImageReader";
 import TextColorExtractor from "./TextColorExtractor";
 import Tabs from "./Tabs";
+import { FEATURES_LABEL } from "./utils/constants";
 
 const Home = () => {
   /**
@@ -31,7 +32,7 @@ const Home = () => {
    */
   const allTabs = {
     1: {
-      label: "Text to Color",
+      label: FEATURES_LABEL.TEXT_TO_COLOR,
       component: (
         <TextColorExtractor
           setLoading={setLoading}
@@ -41,7 +42,7 @@ const Home = () => {
         />
       ),
     },
-    2: { label: "Color From Image", component: <ImageReader /> },
+    2: { label: FEATURES_LABEL.IMAGE_TO_COLOR, component: <ImageReader /> },
   };
 
   /**
