@@ -1,6 +1,16 @@
 import BaseImage from "../../public/BaseImage.jpg?url";
 import { HUE_EXTRACTOR_TYPE } from "./utils/constants";
 
+/**
+ * Details card component that provides detailed information about the current feature.
+ *
+ * @component Details
+ * @prop {Array} demoColors - Some colors used in the description card for the Image to Color feature.
+ * @prop {String} heading - Heading used in the card.
+ * @prop {String} description - Description for the Image to Color feature.
+ * @prop {Number} hueExtractorType - Extractor type: Image to color.
+ */
+
 const Details = ({ heading, demoColors, description, hueExtractorType }) => {
   return (
     <div className="card lg:card-side shadow-xl mb-20">

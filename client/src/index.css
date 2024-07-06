@@ -23,3 +23,8 @@ body {
 .color-card:hover {
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
 }
+
+.color_extract-image {
+  max-height: 400px;
+  object-fit: cover;
+}

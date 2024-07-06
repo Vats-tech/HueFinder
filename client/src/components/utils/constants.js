@@ -38,3 +38,11 @@ export const FEATURES_LABEL = {
 export const LIX = {
   RGB_TO_HEX_CONVERTER: true,
 };
+
+export const LABEL_USED = {
+  HUE_FINDER: "HUE FINDER",
+  PALETTE: "Palette",
+  HEX: "HEX",
+  RGB: "RGB",
+  CONVERT: "CONVERT",
+};
