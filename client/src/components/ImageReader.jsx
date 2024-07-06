@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import BaseImage from "../../public/BaseImage.jpg?url";
+import BaseImage from "/BaseImage.jpg?url";
 import { fetchColorPalette, getHexFromRGB } from "./utils/util";
 import Details from "./Detaills";
 import {
@@ -11,65 +11,78 @@ import {
 } from "./utils/constants";
 import ColorConverter from "./ColorConverter";
 
+/**
+ * ImageReader component :
+ * - Extracting colors from an image.
+ * - Displaying the color palette of the image.
+ * - Allowing color selection by hovering over the image.
+ *
+ * @component ImageReader
+ */
+
 const ImageReader = () => {
   /**
-   * Holds current image.
+   * State hook to store the current image URL for color extraction.
+   *
+   * @constant {string} image - The current image URL.
+   * @function setImage - Function to update the image URL.
+   * @default BaseImage
    */
   const [image, setImage] = useState(BaseImage);
 
   /**
-   * Holds color of image
+   * State hook that holds the color extracted from the image.
+   *
+   * @constant {string} color - The color extracted from the image.
+   * @function setColor - Function to update the extracted color.
+   * @default "#380132" - The initial color value.
    */
   const [color, setColor] = useState("#380132");
 
   /**
-   * Holds selected color of image
+   * State hook that holds the selected color from the image.
+   *
+   * @constant {string} selectedColor - The selected color from the image.
+   * @default "#380132" - The initial selected color value.
+   * @function setSelectedColor - Function to update the selected color.
    */
   const [selectedColor, setSelectedColor] = useState("#380132");
 
   /**
-   * Holds color palette.
+   * State hook that holds the color palette extracted from the image.
+   *
+   * @constant {Array} colorPalette - The array of colors in the palette extracted from the image.
+   * @default [] - The initial color palette is an empty array.
+   * @function setColorPalette - Function to update the color palette.
    */
   const [colorPalette, setColorPalette] = useState([]);
 
   /**
-   * Get the color palette of the image
+   * Reference to the image element for color extraction.
+   *
+   * @constant {object} imageRef - The reference object for the image element.
+   * @default null - The initial value is null.
    */
-  const getAllColorPlatte = () => {
-    const img = document.querySelector("img");
-    if (img.complete) {
-      const palette = fetchColorPalette(img);
-      setColorPalette(palette);
-    } else {
-      img.addEventListener("load", function () {
-        const palette = fetchColorPalette(img);
-        setColorPalette(palette);
-      });
-    }
-  };
+  const imageRef = useRef(null);
 
   /**
-   * Handle action after uploading the image.
-   * @param {*} event
+   * Handles actions after uploading the image. Extracts the URL of the image from the event and stores it in the image state.
+   *
+   * @param {Event} event - The event object containing information about the uploaded image.
    */
   const onImageUpload = (event) => {
     const file = event.target.files[0];
     const reader = new FileReader();
-    reader.onload = function (e) {
-      const image = new Image();
-      image.src = e.target.result;
-      image.onload = function () {
-        setImage(e.target.result);
-        const palette = getAllColorPlatte(e.target.result);
-        setColorPalette(palette);
-      };
-    };
     reader.readAsDataURL(file);
+    reader.onload = function (e) {
+      setImage(reader.result);
+    };
   };
 
   /**
-   * Handle mouse action on image, fetches color of hovered area.
-   * @param {*} e
+   * Handles mouse actions on the image to fetch the color of the hovered area.
+   *
+   * @param {Event} e - The mouse event object.
    */
   const handleMouseMove = (e) => {
     const canvas = document.createElement("canvas");
@@ -89,15 +102,35 @@ const ImageReader = () => {
   };
 
   /**
-   * Handle click on image.
+   * Handle click on image, keep the current color as selected color.
    */
   const handleClickOnImage = () => {
     setSelectedColor(color);
   };
 
+  /**
+   * Extracts the color palette each time an image is uploaded:
+   * - Begins extraction immediately if the image is already rendered.
+   * - Sets up an event listener to trigger extraction when the image finishes loading, if not yet rendered.
+   * - Cleans up the event listener once the image is fully loaded.
+   */
   useEffect(() => {
-    getAllColorPlatte();
-  }, []);
+    const currentImage = imageRef.current;
+    const onLoad = () => {
+      const palette = fetchColorPalette(currentImage) ?? [];
+      setColorPalette(palette);
+    };
+
+    if (currentImage.complete) {
+      onLoad();
+    } else {
+      currentImage.addEventListener("load", onLoad);
+    }
+
+    return () => {
+      currentImage.removeEventListener("load", onLoad);
+    };
+  }, [image]);
 
   return (
     <div className="w-full">
@@ -114,9 +147,11 @@ const ImageReader = () => {
             <div className="card-body p-0">
               {image && (
                 <img
+                  id="colorPaletteImage"
                   src={image}
+                  ref={imageRef}
                   alt="Image for color extraction"
-                  className="rounded-t cursor-pointer"
+                  className="rounded-t cursor-pointer color_extract-image"
                   onMouseMove={handleMouseMove}
                   onClick={handleClickOnImage}
                 />
@@ -125,17 +160,18 @@ const ImageReader = () => {
                 <h3 className="text-lg font-light font-mono">Palette</h3>
                 <div className="carousel carousel-center rounded-sm">
                   <div className="carousel-item flex-wrap">
-                    {colorPalette.map((color) => {
-                      return (
-                        <div
-                          key={color}
-                          className="w-12 h-12"
-                          style={{
-                            backgroundColor: color,
-                          }}
-                        ></div>
-                      );
-                    })}
+                    {colorPalette.length > 0 &&
+                      colorPalette.map((color) => {
+                        return (
+                          <div
+                            key={color}
+                            className="w-12 h-12"
+                            style={{
+                              backgroundColor: color,
+                            }}
+                          ></div>
+                        );
+                      })}
                   </div>
                 </div>
               </div>
@@ -145,34 +181,30 @@ const ImageReader = () => {
 
         <div className="flex justify-between flex-col gap-10 mt-10 lg:mt-0">
           <div className="card lg:card-side bg-base-100 shadow-xl rounded-md">
-            <div className="card-body p-0">
-              <div className="flex justify-evenly items-center flex-col md:max-w-d p-4 md:p-6 lg:p-10 gap-6">
-                <div className="">
-                  <input
-                    type="file"
-                    className="file-input file-input-bordered file-input-accent w-full font-mono"
-                    onChange={onImageUpload}
-                  />
-                </div>
-                <div className="flex justify-between w-full">
-                  <div
-                    className="w-20 min-h-3 rounded-md mr-1 md:mr-4"
-                    style={{
-                      backgroundColor: `${color}`,
-                    }}
-                  ></div>
-                  <div
-                    className="w-20 min-h-3 rounded-md mr-1 md:mr-4"
-                    style={{
-                      backgroundColor: `${selectedColor}`,
-                    }}
-                  ></div>
-                  <div
-                    id="colorDisplay"
-                    className="w-full flex justify-around items-center border-2 border-green-200 min-h-12 font-light font-mono rounded-lg"
-                  >
-                    <pre>HEX {selectedColor}</pre>
-                  </div>
+            <div className="card-body flex justify-evenly items-center flex-col md:max-w-d p-4 md:p-6 lg:p-10 gap-6">
+              <input
+                type="file"
+                className="file-input file-input-bordered file-input-accent w-full font-mono"
+                onChange={onImageUpload}
+              />
+              <div className="flex justify-between w-full">
+                <span
+                  className="w-20 min-h-3 rounded-md mr-1 md:mr-4"
+                  style={{
+                    backgroundColor: `${color}`,
+                  }}
+                ></span>
+                <span
+                  className="w-20 min-h-3 rounded-md mr-1 md:mr-4"
+                  style={{
+                    backgroundColor: `${selectedColor}`,
+                  }}
+                ></span>
+                <div
+                  id="colorDisplay"
+                  className="w-full flex justify-around items-center border-2 border-green-200 min-h-12 font-light font-mono rounded-lg"
+                >
+                  <pre>HEX {selectedColor}</pre>
                 </div>
               </div>
             </div>
