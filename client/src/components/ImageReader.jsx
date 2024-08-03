@@ -10,6 +10,7 @@ import {
   LIX,
 } from "./utils/constants";
 import ColorConverter from "./ColorConverter";
+import React from "react";
 
 /**
  * ImageReader component :
@@ -74,7 +75,7 @@ const ImageReader = () => {
     const file = event.target.files[0];
     const reader = new FileReader();
     reader.readAsDataURL(file);
-    reader.onload = function (e) {
+    reader.onload = function () {
       setImage(reader.result);
     };
   };

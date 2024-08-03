@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { getColorData as getColorData } from "./api/ColorAPI";
-import Cards from "./Cards";
 import ImageReader from "./ImageReader";
 import TextColorExtractor from "./TextColorExtractor";
 import Tabs from "./Tabs";
 import { FEATURES_LABEL } from "./utils/constants";
+import React from "react";
 
 const Home = () => {
   /**
@@ -110,7 +109,11 @@ const Home = () => {
         </aside>
         <nav>
           <div className="grid grid-flow-col gap-4">
-            <a href="https://github.com/Vats-tech/HueFinder" target="_blank">
+            <a
+              href="https://github.com/Vats-tech/HueFinder"
+              target="_blank"
+              rel="noreferrer"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 x="0px"

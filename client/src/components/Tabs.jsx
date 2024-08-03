@@ -1,3 +1,5 @@
+import React from "react";
+import PropTypes from "prop-types";
 import { Fragment } from "react";
 
 const Tabs = ({ allTabs, activeTab, onChangeTab }) => {
@@ -32,4 +34,9 @@ const Tabs = ({ allTabs, activeTab, onChangeTab }) => {
   );
 };
 
+Tabs.propTypes = {
+  allTabs: PropTypes.array.isRequired,
+  activeTab: PropTypes.number.isRequired,
+  onChangeTab: PropTypes.func.isRequired,
+};
 export default Tabs;
