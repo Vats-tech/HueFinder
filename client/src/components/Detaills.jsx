@@ -1,3 +1,5 @@
+import React from "react";
+import PropTypes from "prop-types";
 import BaseImage from "../../public/BaseImage.jpg?url";
 import { HUE_EXTRACTOR_TYPE } from "./utils/constants";
 
@@ -57,6 +59,14 @@ const Details = ({ heading, demoColors, description, hueExtractorType }) => {
       </div>
     </div>
   );
+};
+
+// Define PropTypes for the component
+Details.propTypes = {
+  heading: PropTypes.string.isRequired,
+  demoColors: PropTypes.arrayOf(PropTypes.string).isRequired,
+  description: PropTypes.string,
+  hueExtractorType: PropTypes.string.isRequired,
 };
 
 export default Details;

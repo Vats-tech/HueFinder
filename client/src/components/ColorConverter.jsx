@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { getHexFromRGB, hexToRgb } from "./utils/util";
+import React from "react";
 
 const ColorConverter = () => {
   const [inputColor, setInputColor] = useState();

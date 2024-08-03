@@ -1,4 +1,5 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 import { getColorData as getColorData } from "./api/ColorAPI";
 import Cards from "./Cards";
 import Details from "./Detaills";
@@ -9,6 +10,7 @@ import {
   HUE_EXTRACTOR_TYPE,
 } from "./utils/constants";
 import { getHexFromRGB } from "./utils/util";
+import React from "react";
 
 const TextColorExtractor = ({
   setLoading,
@@ -53,7 +55,7 @@ const TextColorExtractor = ({
    */
   const onInput = (event) => {
     const inputValue = event.target.value;
-    inputValue && setUserInput(inputValue);
+    setUserInput(inputValue);
   };
 
   /**
@@ -179,6 +181,13 @@ const TextColorExtractor = ({
       </div>
     </div>
   );
+};
+
+TextColorExtractor.propTypes = {
+  setLoading: PropTypes.func.isRequired,
+  setToastStatus: PropTypes.func.isRequired,
+  setToast: PropTypes.func.isRequired,
+  closeToast: PropTypes.func.isRequired,
 };
 
 export default TextColorExtractor;

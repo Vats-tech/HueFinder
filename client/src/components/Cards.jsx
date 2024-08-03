@@ -1,4 +1,6 @@
+import React from "react";
 import { useState } from "react";
+import PropTypes from "prop-types";
 
 const Cards = ({ color, copyTextToClipboard }) => {
   const [showCopyIcon, toggleCopyIcon] = useState(false);
@@ -46,6 +48,11 @@ const Cards = ({ color, copyTextToClipboard }) => {
       <span className="text-sm md:text-lg lg:text-lg text-white">{color}</span>
     </div>
   );
+};
+
+Cards.propTypes = {
+  color: PropTypes.string.isRequired,
+  copyTextToClipboard: PropTypes.func.isRequired,
 };
 
 export default Cards;
