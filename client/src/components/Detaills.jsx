@@ -66,7 +66,7 @@ Details.propTypes = {
   heading: PropTypes.string.isRequired,
   demoColors: PropTypes.arrayOf(PropTypes.string).isRequired,
   description: PropTypes.string,
-  hueExtractorType: PropTypes.string.isRequired,
+  hueExtractorType: PropTypes.number.isRequired,
 };
 
 export default Details;

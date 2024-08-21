@@ -1,0 +1,9 @@
+/* For now use this style, Need to change the tab styles */
+.hue-tab-container .hue-tab-content {
+  padding: 0 204px;
+  position: sticky;
+  top: 50px;
+  height: 40px;
+  z-index: 2;
+  background-color: #fff;
+}

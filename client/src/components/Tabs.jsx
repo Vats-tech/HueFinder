@@ -12,14 +12,17 @@ const Tabs = ({ allTabs, activeTab, onChangeTab }) => {
   };
 
   return (
-    <div role="tablist" className="tabs tabs-bordered justify-center">
+    <div
+      role="tablist"
+      className="hue-tab-container tabs tabs-bordered justify-center"
+    >
       {Object.keys(allTabs).map((tabIndex) => (
         <Fragment key={tabIndex}>
           <input
             type="radio"
             name="my_tabs_1"
             role="tab"
-            className="tab font-mono text-base"
+            className="tab font-mono text-base hue-tab-content"
             style={{ width: "max-content" }}
             aria-label={allTabs[tabIndex].label}
             onClick={() => onChangeTab(Number(tabIndex))}

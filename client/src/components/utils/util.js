@@ -22,16 +22,17 @@ export const fetchColorPalette = (img) => {
  * @returns
  */
 export const changeRGBToHexValue = (value) => {
-  const hex = Math.round(value).toString(16);
+  const validValue = Math.max(0, Math.min(255, Math.round(value)));
+  const hex = Math.round(validValue).toString(16);
   return hex.length == 1 ? "0" + hex : hex;
 };
 
 /**
  * Change RGB to HEX
- * @param {*} param0
- * @returns Hex value
+ * @param {Array} RGB value of color/
+ * @returns HEX value of color.
  */
-export const getHexFromRGB = ({ r, g, b }) => {
+export const getHexFromRGB = ([r, g, b]) => {
   return (
     "#" +
     changeRGBToHexValue(r) +
