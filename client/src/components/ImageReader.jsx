@@ -97,8 +97,7 @@ const ImageReader = () => {
     ctx.drawImage(e.target, 0, 0, e.target.width, e.target.height);
 
     const pixel = ctx.getImageData(x, y, 1, 1).data;
-    const rgb = { r: pixel[0], g: pixel[1], b: pixel[2] };
-    const hex = getHexFromRGB(rgb);
+    const hex = getHexFromRGB(pixel);
     setColor(hex);
   };
 

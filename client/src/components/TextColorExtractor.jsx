@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { getColorData as getColorData } from "./api/ColorAPI";
 import Cards from "./Cards";
@@ -12,6 +12,8 @@ import {
 import { getHexFromRGB } from "./utils/util";
 import React from "react";
 
+const colorStackCount = 4;
+const totalNumberOfCardsOnLandingPage = 56;
 const TextColorExtractor = ({
   setLoading,
   setToastStatus,
@@ -19,39 +21,21 @@ const TextColorExtractor = ({
   closeToast,
 }) => {
   /**
-   * Holds colors hex value to display on the cards.
+   * `colors` is a state variable that holds an array of hex value to display on the cards.
+   * `stColors` is a function used to update the `colors` state.
    */
-  const [colors, setColors] = useState([
-    {
-      r: 222,
-      g: 126,
-      b: 40,
-    },
-    {
-      r: 96,
-      g: 41,
-      b: 20,
-    },
-    {
-      r: 250,
-      g: 212,
-      b: 138,
-    },
-    {
-      r: 150,
-      g: 12,
-      b: 38,
-    },
-  ]);
+  const [colors, setColors] = useState([]);
 
   /**
-   * Holds User search input.
+   * `userInput` is a state variable that holds user search input.
+   * 'setUserInput` is a function used to update the `userInput` state.
    */
   const [userInput, setUserInput] = useState();
 
   /**
-   * Get user input.
-   * @param {*} event
+   * Handles user input from an event and updates the state with the input value.
+   *
+   * @param {*} event - The event object containing the user's input.
    */
   const onInput = (event) => {
     const inputValue = event.target.value;
@@ -59,12 +43,21 @@ const TextColorExtractor = ({
   };
 
   /**
-   * Handle submit action on form.
-   * @param {*} event
+   * Handles the form submission to fetch colors from the API.
+   * This function is triggered when the user submits the form.
+   * It makes an API call to retrieve an array of RGB colors and updates the state with the fetched colors.
+   * NOTE - API return only limited number of colors so we are adding some random colors at the end, so that
+   * home page can have sufficient color cards.
+   *
+   * @param {Event} event -  The event object to prevent the default form submission.
    */
   const handleSubmit = (event) => {
     event.preventDefault();
-    fetchColors();
+    fetchColors(userInput).then((colors) => {
+      const randomColors = fetchRandomColors();
+      const allColors = [...(colors ?? []), ...randomColors];
+      setColors(allColors);
+    });
   };
 
   /**
@@ -91,51 +84,142 @@ const TextColorExtractor = ({
   };
 
   /**
-   * Fetches all colors related to the input text.
+   * Generates a random RGB color.
+   *
+   * This function returns a randomly generated color in the RGB format.
+   * Each color component (red, green, blue) is an integer between 0 and 255,
+   * inclusive. The function can be used to create an array of random colors
+   * or to assign random colors to elements dynamically.
+   *
+   * @returns {string} - A string representing the random color in the format 'rgb(r, g, b)'.
+   *
+   * Example usage:
+   * const randomColor = getRandomColor();
+   * Returns something like 'rgb(34, 150, 243)'
    */
-  const fetchColors = async () => {
+
+  const generateRandomColor = () => {
+    return [
+      Math.floor(Math.random() * 256), // Red
+      Math.floor(Math.random() * 256), // Green
+      Math.floor(Math.random() * 256), // Blue
+    ];
+  };
+
+  /**
+   * Groups an array of RGB colors into an array of arrays, each containing 4 colors.
+   * This is used to assign 4 different colors to a card.
+   *
+   * @param {Array} colors - An array of RGB color strings.
+   * @returns {Array} - An array of arrays, each containing 4 RGB color strings.
+   */
+  function groupColorsForCards(colors) {
+    return Array.from(
+      { length: Math.ceil(colors.length / colorStackCount) },
+      (_, i) =>
+        colors.slice(i * colorStackCount, i * colorStackCount + colorStackCount)
+    );
+  }
+
+  /**
+   * Fetch an array of RGB colors from api and grouped them in array of arrays of length `colorStackCount`, and convert to HEX value.
+   *
+   * @param {String} query - The user's query
+   * @returns {Array} Array of HEX colors.
+   */
+  const fetchColors = async (query) => {
     setLoading(true);
     try {
-      const { data } = await getColorData(userInput);
-      const colors = data
-        .map((color) => {
-          const keys = Object.keys(color);
-          const rgbValue = keys.map((key) => {
-            const [r, g, b] = color[key].rgb;
-            return { r, g, b };
-          });
-          return rgbValue;
-        })
-        .flatMap((e) => e);
-      setColors(colors);
+      const { data } = await getColorData(query);
+      const colorPalette = data
+        .flatMap((colors) => colors)
+        .map((colors) => {
+          return getHexFromRGB(colors);
+        });
       setLoading(false);
+      return groupColorsForCards(colorPalette);
     } catch (error) {
       handleAPIError(error.response);
     }
   };
 
   /**
-   * Copy the hex color of card on clipboard.
-   * @param {*} hexValue
+   * Fetch random colors to display on the landing page and update the `colors` state.
+   * The total number of random colors is calculated as `totalNumberOfCardsOnLandingPage * colorStackCount`,
+   * since each card contains `colorStackCount` colors.
    */
-  const copyTextToClipboard = (hexValue) => {
-    navigator.clipboard
-      .writeText(hexValue)
-      .then(() => {
-        // Success message
-        // setCopiedText(hexValue);
-        setToast({
-          type: "success",
-          message: `Color copied to clipboard: ${hexValue}`,
+  function fetchRandomColors() {
+    // TODO - Add infinite scroll feature to get next batch of color palette.
+    const colorSet = [
+      ...Array(totalNumberOfCardsOnLandingPage * colorStackCount),
+    ].map((_, index) => {
+      return getHexFromRGB(generateRandomColor());
+    });
+    const randomColors = groupColorsForCards(colorSet);
+    return randomColors;
+  }
+
+  /**
+   * Copies the given text to the clipboard using the modern Clipboard API.
+   *
+   * This function takes a string as an argument and attempts to copy it to the user's clipboard
+   * using the Clipboard API, which is supported in most modern browsers. The function will log
+   * success or error messages to the console based on the outcome.
+   *
+   * @param {string} text - The text string to be copied to the clipboard.
+   *
+   * Example usage:
+   * copyTextToClipboard('Hello, World!');
+   * // The text 'Hello, World!' is now in the user's clipboard and can be pasted.
+   */
+  const copyTextToClipboard = (text) => {
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard
+        .writeText(text)
+        .then(() => {
+          // Success message
+          // setCopiedText(hexValue);
+          setToast({
+            type: "success",
+            message: `Color copied to clipboard: ${text}`,
+          });
+          setToastStatus(true);
+          closeToast();
+        })
+        .catch((error) => {
+          // Error handling
+          alert("Failed to copy text: ", error);
         });
-        setToastStatus(true);
-        closeToast();
-      })
-      .catch((err) => {
-        // Error handling
-        alert("Failed to copy text: ", err);
-      });
+    } else {
+      console.error(
+        "Clipboard API is not supported or not in a secure context."
+      );
+    }
   };
+
+  /**
+   * Executes the `fetchRandomColors` function when the component mounts.
+   * This effect runs only once due to the empty dependency array,
+   * ensuring that the colors are fetched initially when the component is rendered.
+   */
+  useEffect(() => {
+    const randomColors = fetchRandomColors();
+    setColors(randomColors);
+  }, []);
+
+  const colorPaletteCards = (
+    <div className="flex justify-between flex-wrap mt-5">
+      {colors.map((color, index) => {
+        return (
+          <Cards
+            key={index}
+            color={color}
+            copyTextToClipboard={copyTextToClipboard}
+          />
+        );
+      })}
+    </div>
+  );
 
   return (
     <div className="w-full">
@@ -155,30 +239,19 @@ const TextColorExtractor = ({
               type="text"
               required
               placeholder="Type here to discover the color"
-              className="input input-primary w-full  lg:mr-9"
+              className="input input-primary w-full  lg:mr-9 rounded-3xl"
               onChange={onInput}
             />
             <button
               type="submit"
-              className="w-32 btn btn-outline btn-primary lg:btn-wide mt-10 lg:mt-0"
+              className="w-32 btn btn-outline btn-primary mt-10 lg:mt-0 rounded-3xl"
             >
               Search
             </button>
           </form>
         </div>
       </div>
-
-      <div className="grid gap-4 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 pt-10">
-        {colors.map((color, index) => {
-          return (
-            <Cards
-              key={index}
-              color={getHexFromRGB(color)}
-              copyTextToClipboard={copyTextToClipboard}
-            />
-          );
-        })}
-      </div>
+      {colorPaletteCards}
     </div>
   );
 };
