@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 
-function getColorsFromImage(response) {
+async function getColorsFromImage(response) {
   const imageData = response.data.items.slice(0, 100);
   const extractedImages = imageData.map((elements) => {
     return elements.link;
@@ -43,27 +43,22 @@ function getColorsFromImage(response) {
       });
     });
 
-  return Promise.all(promises)
-    .then((palettes) => {
-      return palettes;
-    })
-    .catch((error) => {
-      // Handle errors
-      res.status(422).json({ error: "Internal server error" });
-    });
+  try {
+    const palettes = await Promise.all(promises);
+    return palettes;
+  } catch (error_1) {
+    // Handle errors
+    res.status(422).json({ error: "Internal server error" });
+  }
 }
 
 app.get("/:keyword", async (req, res) => {
   const query = req.params.keyword;
   const apiKey = process.env.API_KEY;
-  const cx = process.env.CX;
-  console.log(apiKey, cx);
   try {
-    const baseURL = "https://www.googleapis.com/customsearch/v1";
+    const baseURL = `https://www.googleapis.com/customsearch/v1?key=${apiKey}`;
     const response = await axios.get(baseURL, {
       params: {
-        key: apiKey,
-        cx: cx,
         q: query,
         searchType: "image", // This restricts results to images only
         num: 10,
