@@ -56,7 +56,8 @@ function getColorsFromImage(response) {
 app.get("/:keyword", async (req, res) => {
   const query = req.params.keyword;
   const apiKey = process.env.API_KEY;
-  const cx = process.env.cx;
+  const cx = process.env.CX;
+  console.log(apiKey, cx);
   try {
     const baseURL = "https://www.googleapis.com/customsearch/v1";
     const response = await axios.get(baseURL, {
