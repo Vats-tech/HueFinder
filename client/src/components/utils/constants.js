@@ -2,8 +2,8 @@
  * Hue extractor type i.e, Text to Color / Image to Color
  */
 export const HUE_EXTRACTOR_TYPE = {
-  TEXT_COLOR_EXTRACTOR: 1,
-  IMAGE_COLOR_EXTRACTOR: 2,
+  TEXT_COLOR_EXTRACTOR: "TEXT_COLOR_EXTRACTOR",
+  IMAGE_COLOR_EXTRACTOR: "IMAGE_COLOR_EXTRACTOR",
 };
 
 /**
@@ -13,14 +13,14 @@ export const DESCRIPTION = {
   IMAGE_COLOR_EXTRACTOR:
     "Experience the magic of color extraction from images! Upload any image and hover over it to reveal the captivating colors of each area.",
   TEXT_COLOR_EXTRACTOR:
-    "Explore the vibrant world of colors with our innovative text-based color extraction tool. Simply enter any text, and watch as our application fetches a delightful array of color palettes inspired by your input.",
+    "Explore a stunning collection of color palettes with our intuitive color tool. Generate, customize, and extract colors from images effortlessly. Perfect for designers, artists, and developers, our app helps you find the perfect shades for any project. Discover harmonious color combinations and bring your creative ideas to life with ease!",
 };
 
 /**
  * Demo colors to add on demo cards
  */
 export const DEMO_COLORS = {
-  TEXT_TO_COL: ["#fcfc24", "#fcf47c", "#fcbb04"],
+  TEXT_TO_COL: ["bg-green-400", "bg-green-600", "bg-green-800"],
   IMG_TO_COL: ["rgb(12, 34, 123)", "rgb(2, 1, 96)", "rgb(1, 52, 30)"],
 };
 

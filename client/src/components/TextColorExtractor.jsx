@@ -12,7 +12,7 @@ import {
 import { getHexFromRGB } from "./utils/util";
 import React from "react";
 
-const colorStackCount = 4;
+const colorStackCount = 10;
 const totalNumberOfCardsOnLandingPage = 56;
 const TextColorExtractor = ({
   setLoading,
@@ -208,7 +208,7 @@ const TextColorExtractor = ({
   }, []);
 
   const colorPaletteCards = (
-    <div className="flex justify-between flex-wrap mt-5">
+    <div className="flex justify-center flex-wrap gap-12 mt-5">
       {colors.map((color, index) => {
         return (
           <Cards
@@ -222,14 +222,14 @@ const TextColorExtractor = ({
   );
 
   return (
-    <div className="w-full">
+    <div className="w-full mx-4">
       <Details
         demoColors={DEMO_COLORS.TEXT_TO_COL}
         heading={FEATURES_LABEL.TEXT_TO_COLOR}
         description={DESCRIPTION.TEXT_COLOR_EXTRACTOR}
         hueExtractorType={HUE_EXTRACTOR_TYPE.TEXT_COLOR_EXTRACTOR}
       />
-      <div className="card lg:card-side bg-base-100 shadow-xl">
+      {/* <div className="card lg:card-side bg-base-100 shadow-xl">
         <div className="card-body">
           <form
             onSubmit={handleSubmit}
@@ -250,7 +250,7 @@ const TextColorExtractor = ({
             </button>
           </form>
         </div>
-      </div>
+      </div> */}
       {colorPaletteCards}
     </div>
   );

@@ -15,17 +15,17 @@ import { HUE_EXTRACTOR_TYPE } from "./utils/constants";
 
 const Details = ({ heading, demoColors, description, hueExtractorType }) => {
   return (
-    <div className="card lg:card-side shadow-xl mb-20">
+    <div className="card lg:card-side shadow-xl my-20">
       <div className="w-2/5 p-10">
         <div className="indicator">
           <div className="indicator-item indicator-bottom">
-            <button className="btn btn-default font-mono font-extralight disabled:opacity-75 pointer-events-none">
+            <button className="btn btn-default font-mono font-extralight disabled:opacity-75 text-green-600 pointer-events-none">
               {hueExtractorType === HUE_EXTRACTOR_TYPE.IMAGE_COLOR_EXTRACTOR
                 ? "HOVER ON BELOW IMAGE"
                 : "DEMO"}
             </button>
           </div>
-          <span className="indicator-item badge badge-secondary"></span>
+          <span className="indicator-item badge badge-secondary bg-green-600 border-green-600"></span>
           <div className="grid w-32 h-32 bg-base-300 place-items-center font-mono font-extralight">
             {hueExtractorType === HUE_EXTRACTOR_TYPE.IMAGE_COLOR_EXTRACTOR ? (
               <img
@@ -34,7 +34,7 @@ const Details = ({ heading, demoColors, description, hueExtractorType }) => {
                 className="rounded-lg cursor-pointer w-full h-full"
               />
             ) : (
-              "Yellow ..."
+              <span className="text-green-500">&quot;Green ...&quot;</span>
             )}
           </div>
         </div>
@@ -42,7 +42,7 @@ const Details = ({ heading, demoColors, description, hueExtractorType }) => {
 
       <div className="card-body">
         <h2 className="card-title font-mono font-semibold">{heading}</h2>
-        <p className="font-mono font-extralight antialiased tracking-tight text-sm">
+        <p className="font-mono font-extralight antialiased tracking-tight text-base text-gray-500">
           {description}
         </p>
         <div className="flex justify-evenly">
@@ -50,8 +50,7 @@ const Details = ({ heading, demoColors, description, hueExtractorType }) => {
             return (
               <div
                 key={color}
-                className="w-20 h-20 rounded-full"
-                style={{ backgroundColor: `${color}` }}
+                className={`w-20 h-20 rounded-full ${color} `}
               ></div>
             );
           })}
