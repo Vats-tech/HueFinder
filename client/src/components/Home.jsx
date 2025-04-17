@@ -1,10 +1,9 @@
 import { useState } from "react";
 import ImageReader from "./ImageReader";
 import TextColorExtractor from "./TextColorExtractor";
-import Tabs from "./Tabs";
-import { FEATURES_LABEL } from "./utils/constants";
+import { HUE_EXTRACTOR_TYPE } from "./utils/constants";
 import React from "react";
-import Heading from "./heading";
+import Heading from "./Heading";
 
 const Home = () => {
   /**
@@ -23,27 +22,12 @@ const Home = () => {
   const [toast, setToast] = useState({ type: "success", message: "" });
 
   /**
-   * Current tab.
+   * Currently active hue type.
+   * Default is image color extractor.
    */
-  const [activeTab, setActiveTab] = useState(1);
-
-  /**
-   * Holds all tabs.
-   */
-  const allTabs = {
-    1: {
-      label: FEATURES_LABEL.TEXT_TO_COLOR,
-      component: (
-        <TextColorExtractor
-          setLoading={setLoading}
-          setToastStatus={setToastStatus}
-          setToast={setToast}
-          closeToast={closeToast}
-        />
-      ),
-    },
-    2: { label: FEATURES_LABEL.IMAGE_TO_COLOR, component: <ImageReader /> },
-  };
+  const [activeHueType, setActiveHueType] = useState(
+    HUE_EXTRACTOR_TYPE.IMAGE_COLOR_EXTRACTOR
+  );
 
   /**
    * Handler to close the toast.
@@ -51,13 +35,6 @@ const Home = () => {
   function closeToast() {
     setTimeout(() => setToastStatus(false), 1000);
   }
-
-  /**
-   * Handle change in tab.
-   */
-  const onChangeTab = (tabNumber) => {
-    setActiveTab(tabNumber);
-  };
 
   const Loader = (
     <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-green-200 bg-opacity-20 z-50">
@@ -73,20 +50,38 @@ const Home = () => {
     </div>
   );
 
+  const onChangeHueType = (type) => {
+    setActiveHueType(type);
+  };
+
   return (
-    <div className="landing-page__container">
+    <div className="w-full">
       {loading && Loader}
       {showToast && ToastContainer}
-      <Heading />
+      <Heading onChangeHueType={onChangeHueType} />
       <main>
-        <div className="flex justify-between landing-page__content">
-          <Tabs
-            allTabs={allTabs}
-            activeTab={activeTab}
-            onChangeTab={onChangeTab}
-          />
+        <div data-test-main-container className="lg:mx-12 flex justify-between">
+          {activeHueType === HUE_EXTRACTOR_TYPE.TEXT_COLOR_EXTRACTOR ? (
+            <TextColorExtractor
+              setLoading={setLoading}
+              setToastStatus={setToastStatus}
+              setToast={setToast}
+              closeToast={closeToast}
+            />
+          ) : (
+            <ImageReader />
+          )}
         </div>
       </main>
+      <footer className="p-4 mt-12 bg-slate-900 text-sm">
+        <div className="p-4 flex justify-center">
+          <ul className="text-white">
+            <li className="p-2"></li>
+            <li className="p-2"></li>
+            <li className="p-2"></li>
+          </ul>
+        </div>
+      </footer>
     </div>
   );
 };
