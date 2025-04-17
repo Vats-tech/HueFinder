@@ -68,11 +68,10 @@ const ImageReader = () => {
 
   /**
    * Handles actions after uploading the image. Extracts the URL of the image from the event and stores it in the image state.
-   *
    * @param {Event} event - The event object containing information about the uploaded image.
    */
   const onImageUpload = (event) => {
-    const file = event.target.files[0];
+    const file = event.target?.files[0];
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = function () {
@@ -132,8 +131,30 @@ const ImageReader = () => {
     };
   }, [image]);
 
+  const colorPaletteStyle = (
+    <div className="p-4">
+      <h3 className="text-lg font-light font-mono">Palette</h3>
+      <div className="carousel carousel-center rounded-sm">
+        <div className="carousel-item flex-wrap">
+          {colorPalette.length > 0 &&
+            colorPalette.map((color) => {
+              return (
+                <div
+                  key={color}
+                  className="w-12 h-12"
+                  style={{
+                    backgroundColor: color,
+                  }}
+                ></div>
+              );
+            })}
+        </div>
+      </div>
+    </div>
+  );
+
   return (
-    <div className="w-full">
+    <div className="w-full px-0 lg:px-32">
       <Details
         demoColors={DEMO_COLORS.IMG_TO_COL}
         heading={FEATURES_LABEL.IMAGE_TO_COLOR}
@@ -156,25 +177,7 @@ const ImageReader = () => {
                   onClick={handleClickOnImage}
                 />
               )}
-              <div className="p-4">
-                <h3 className="text-lg font-light font-mono">Palette</h3>
-                <div className="carousel carousel-center rounded-sm">
-                  <div className="carousel-item flex-wrap">
-                    {colorPalette.length > 0 &&
-                      colorPalette.map((color) => {
-                        return (
-                          <div
-                            key={color}
-                            className="w-12 h-12"
-                            style={{
-                              backgroundColor: color,
-                            }}
-                          ></div>
-                        );
-                      })}
-                  </div>
-                </div>
-              </div>
+              {colorPaletteStyle}
             </div>
           </div>
         </div>
