@@ -3,7 +3,7 @@ import ImageReader from "./ImageReader";
 import TextColorExtractor from "./TextColorExtractor";
 import { HUE_EXTRACTOR_TYPE } from "./utils/constants";
 import React from "react";
-import Heading from "./Heading";
+import HueHeading from "./HueHeading";
 
 const Home = () => {
   /**
@@ -58,7 +58,7 @@ const Home = () => {
     <div className="w-full">
       {loading && Loader}
       {showToast && ToastContainer}
-      <Heading onChangeHueType={onChangeHueType} />
+      <HueHeading onChangeHueType={onChangeHueType} />
       <main>
         <div data-test-main-container className="lg:mx-12 flex justify-between">
           {activeHueType === HUE_EXTRACTOR_TYPE.TEXT_COLOR_EXTRACTOR ? (

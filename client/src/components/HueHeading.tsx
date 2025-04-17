@@ -7,7 +7,7 @@ interface HueHeading {
 
 // This component is used to display the heading of the application
 // It contains the title and the buttons to change the hue type
-const Heading = ({ onChangeHueType }: HueHeading) => {
+const HueHeading = ({ onChangeHueType }: HueHeading) => {
   const isMobileView = window.innerWidth < 768;
   return (
     <header className="sticky top-0 z-50">
@@ -44,4 +44,4 @@ const Heading = ({ onChangeHueType }: HueHeading) => {
   );
 };
 
-export default Heading;
+export default HueHeading;
