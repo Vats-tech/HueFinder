@@ -6,7 +6,7 @@ const colorStackCount = 6;
 const Cards = ({ color, copyTextToClipboard }) => {
   return (
     <div>
-      <div className="min-w-[420px] flex h-28 md:h-32 overflow-auto rounded-lg">
+      <div className="flex h-28 md:h-32 overflow-auto rounded-lg shadow-[2px_2px_8px_rgba(0,0,0,0.2)]">
         {[...Array(colorStackCount)].map((_, index) => {
           return (
             <div

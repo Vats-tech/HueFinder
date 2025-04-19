@@ -208,7 +208,7 @@ const TextColorExtractor = ({
   }, []);
 
   const colorPaletteCards = (
-    <div className="flex justify-center flex-wrap gap-12 mt-5">
+    <div className="grid grid-cols-[repeat(auto-fill,minmax(380px,1fr))] gap-8 mt-5">
       {colors.map((color, index) => {
         return (
           <Cards

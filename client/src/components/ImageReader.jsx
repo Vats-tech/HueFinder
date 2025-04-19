@@ -154,7 +154,7 @@ const ImageReader = () => {
   );
 
   return (
-    <div className="w-full px-0 lg:px-32">
+    <div className="w-full mx-4 px-0 lg:px-8">
       <Details
         demoColors={DEMO_COLORS.IMG_TO_COL}
         heading={FEATURES_LABEL.IMAGE_TO_COLOR}
@@ -162,7 +162,7 @@ const ImageReader = () => {
         hueExtractorType={HUE_EXTRACTOR_TYPE.IMAGE_COLOR_EXTRACTOR}
       />
 
-      <div className="w-full flex flex-col lg:justify-between lg:gap-20 lg:flex-row md:mt-0">
+      <div className="w-full flex flex-col justify-center lg:px-14 lg:gap-20 lg:flex-row md:mt-0">
         <div id="imageContainer" className="w-full lg:w-1/2">
           <div className="card lg:card-side bg-base-100 shadow-xl rounded-md">
             <div className="card-body p-0">
@@ -184,7 +184,7 @@ const ImageReader = () => {
 
         <div className="flex justify-between flex-col gap-10 mt-10 lg:mt-0">
           <div className="card lg:card-side bg-base-100 shadow-xl rounded-md">
-            <div className="card-body flex justify-evenly items-center flex-col md:max-w-d p-4 md:p-6 lg:p-10 gap-6">
+            <div className="card-body flex justify-evenly items-center flex-col md:max-w-d p-9 md:p-6 lg:p-10 gap-6">
               <input
                 type="file"
                 className="file-input file-input-bordered file-input-accent w-full font-mono"
