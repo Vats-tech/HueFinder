@@ -208,7 +208,7 @@ const TextColorExtractor = ({
   }, []);
 
   const colorPaletteCards = (
-    <div className="grid grid-cols-[repeat(auto-fill,minmax(340px,1fr))] gap-8 mt-5">
+    <div className="grid grid-cols-[repeat(auto-fill,minmax(310px,1fr))] lg:grid-cols-[repeat(auto-fill,minmax(350px,1fr))] gap-8 mt-5">
       {colors.map((color, index) => {
         return (
           <Cards
