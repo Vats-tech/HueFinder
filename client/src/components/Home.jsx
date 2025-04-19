@@ -58,7 +58,10 @@ const Home = () => {
     <div className="w-full">
       {loading && Loader}
       {showToast && ToastContainer}
-      <HueHeading onChangeHueType={onChangeHueType} />
+      <HueHeading
+        onChangeHueType={onChangeHueType}
+        activeHueType={activeHueType}
+      />
       <main>
         <div data-test-main-container className="lg:mx-12 flex justify-between">
           {activeHueType === HUE_EXTRACTOR_TYPE.TEXT_COLOR_EXTRACTOR ? (

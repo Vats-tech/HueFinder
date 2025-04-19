@@ -70,7 +70,7 @@ const ColorConverter = () => {
           </div>
         )}
         <button
-          className="btn btn-accent w-32 font-mono"
+          className="btn btn-accent w-32 font-mono mt-4"
           onClick={handleColorConversion}
           disabled={inputColor ? false : true}
         >
