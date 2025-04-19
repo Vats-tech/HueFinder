@@ -184,7 +184,7 @@ const ImageReader = () => {
 
         <div className="flex justify-between flex-col gap-10 mt-10 lg:mt-0">
           <div className="card lg:card-side bg-base-100 shadow-xl rounded-md">
-            <div className="card-body flex justify-evenly items-center flex-col md:max-w-d p-9 md:p-6 lg:p-10 gap-6">
+            <div className="card-body flex justify-evenly items-center flex-col md:max-w-d p-6 md:p-6 lg:p-10 gap-4">
               <input
                 type="file"
                 className="file-input file-input-bordered file-input-accent w-full font-mono"
