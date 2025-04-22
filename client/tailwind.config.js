@@ -15,7 +15,19 @@ export default {
     },
     extend: {
       fontFamily: {
-        roboto: ["Roboto", "sans-serif", "Arimo", "quicksand", "Montserrat"],
+        roboto: [
+          "Geist",
+          "Mukta",
+          "National Park",
+          "Poppins",
+          "Arimo",
+          "Montserrat",
+          "Roboto",
+          "sans-serif",
+          "Arimo",
+          "quicksand",
+        ],
+        sans: ["Poppins", "sans-serif"],
       },
     },
   },
