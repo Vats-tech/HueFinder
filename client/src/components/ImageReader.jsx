@@ -11,6 +11,7 @@ import {
 } from "./utils/constants";
 import ColorConverter from "./ColorConverter";
 import React from "react";
+import HueModal from "./HueModal";
 
 /**
  * ImageReader component :
@@ -65,6 +66,17 @@ const ImageReader = () => {
    * @default null - The initial value is null.
    */
   const imageRef = useRef(null);
+
+  /**
+   * State hook that holds the modal state.
+   */
+  const [isModalOpen, setIsModalOpen] = useState(true); // Placeholder for modal state
+
+  /**
+   * State hook that holds the details UI state.
+   * This state is used to control the visibility of the details UI.
+   */
+  const [enableDetailsUI, setEnableDetailsUI] = useState(false); // Placeholder for details UI state
 
   /**
    * Handles actions after uploading the image. Extracts the URL of the image from the event and stores it in the image state.
@@ -154,14 +166,24 @@ const ImageReader = () => {
   );
 
   return (
-    <div className="w-full mx-4 px-0 lg:px-8">
-      <Details
-        demoColors={DEMO_COLORS.IMG_TO_COL}
-        heading={FEATURES_LABEL.IMAGE_TO_COLOR}
+    <div className="w-full mx-4 px-0 lg:px-8 my-16">
+      <HueModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title="Image to Color Extractor"
+        subtitle="Extract colors from an image"
         description={DESCRIPTION.IMAGE_COLOR_EXTRACTOR}
-        hueExtractorType={HUE_EXTRACTOR_TYPE.IMAGE_COLOR_EXTRACTOR}
+        buttonText="Got it!"
+        onSubmit={() => setIsModalOpen(false)}
       />
-
+      {enableDetailsUI && (
+        <Details
+          demoColors={DEMO_COLORS.IMG_TO_COL}
+          heading={FEATURES_LABEL.IMAGE_TO_COLOR}
+          description={DESCRIPTION.IMAGE_COLOR_EXTRACTOR}
+          hueExtractorType={HUE_EXTRACTOR_TYPE.IMAGE_COLOR_EXTRACTOR}
+        />
+      )}
       <div className="w-full flex flex-col justify-center lg:px-14 lg:gap-20 lg:flex-row md:mt-0">
         <div id="imageContainer" className="w-full lg:w-1/2">
           <div className="card lg:card-side bg-base-100 shadow-xl rounded-md">
