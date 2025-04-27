@@ -11,6 +11,7 @@ import {
 } from "./utils/constants";
 import { getHexFromRGB } from "./utils/util";
 import React from "react";
+import HueModal from "./HueModal";
 
 const colorStackCount = 10;
 const totalNumberOfCardsOnLandingPage = 56;
@@ -31,6 +32,11 @@ const TextColorExtractor = ({
    * 'setUserInput` is a function used to update the `userInput` state.
    */
   const [userInput, setUserInput] = useState();
+
+  /**
+   * `isModalOpen` is a state variable that determines whether the modal is open or closed.
+   */
+  const [isModalOpen, setIsModalOpen] = useState(true);
 
   /**
    * Handles user input from an event and updates the state with the input value.
@@ -223,34 +229,54 @@ const TextColorExtractor = ({
 
   return (
     <div className="w-full mx-4">
-      <Details
-        demoColors={DEMO_COLORS.TEXT_TO_COL}
-        heading={FEATURES_LABEL.TEXT_TO_COLOR}
-        description={DESCRIPTION.TEXT_COLOR_EXTRACTOR}
-        hueExtractorType={HUE_EXTRACTOR_TYPE.TEXT_COLOR_EXTRACTOR}
-      />
-      {/* <div className="card lg:card-side bg-base-100 shadow-xl">
-        <div className="card-body">
-          <form
-            onSubmit={handleSubmit}
-            className="flex justify-center items-center flex-col lg:flex-row"
-          >
-            <input
-              type="text"
-              required
-              placeholder="Type here to discover the color"
-              className="input input-primary w-full  lg:mr-9 rounded-3xl"
-              onChange={onInput}
-            />
-            <button
-              type="submit"
-              className="w-32 btn btn-outline btn-primary mt-10 lg:mt-0 rounded-3xl"
-            >
-              Search
-            </button>
-          </form>
+      <HueModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title="Color Palette"
+        subtitle="Discover the color palette"
+        // description={DESCRIPTION.TEXT_COLOR_EXTRACTOR}
+        buttonText="Got it!"
+        onSubmit={() => setIsModalOpen(false)}
+      >
+        <p>
+          Explore a stunning collection of color palettes with our intuitive
+          color tool. Discover harmonious color combinations and bring your
+          creative ideas to life with ease!
+        </p>
+        <div className="flex justify-center items-center gap-3 my-4">
+          <div className="w-16 h-16 bg-green-400 rounded-full"></div>
+          <div className="w-16 h-16 bg-green-600 rounded-full"></div>
+          <div className="w-16 h-16 bg-green-800 rounded-full"></div>
         </div>
-      </div> */}
+      </HueModal>
+      <div className="my-12">
+        <h1 className="text-5xl font-mono font-semibold text-center mb-2 scale-x-150 text-slate-600">
+          Color Palette
+        </h1>
+        <p className="text-center font-mono font-extralight antialiased tracking-tight text-base text-gray-400 scale-x-110">
+          Discover the color palette
+        </p>
+      </div>
+      <div className="my-12">
+        <form
+          onSubmit={handleSubmit}
+          className="flex justify-center items-center flex-col lg:flex-row"
+        >
+          <input
+            type="text"
+            required
+            placeholder="Type here to discover the color"
+            className="input input-primary w-full  lg:mr-9 rounded-3xl"
+            onChange={onInput}
+          />
+          <button
+            type="submit"
+            className="w-32 btn btn-outline btn-primary mt-4 lg:mt-0 rounded-3xl"
+          >
+            Search
+          </button>
+        </form>
+      </div>
       {colorPaletteCards}
     </div>
   );

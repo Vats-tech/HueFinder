@@ -1,4 +1,5 @@
 import React from "react";
+import { createPortal } from "react-dom";
 
 interface HueModalProps {
   title?: string;
@@ -23,7 +24,14 @@ const HueModal = ({
 }: HueModalProps) => {
   if (!isOpen) return null; // Don't render if not open
 
-  return (
+  // use createPortal to render the modal in a different part of the DOM
+  // This is useful for modals to avoid overflow issues and z-index problems
+  // when using a parent component with overflow hidden or z-index issues
+  // This assumes you have a div with id "modal-outlet" in your index.html or main HTML file
+  // <div id="modal-outlet"></div>
+  // This is where the modal will be rendered
+  // You can add this div in your index.html or main HTML file
+  return createPortal(
     <div className="fixed inset-0 z-50 flex items-center justify-center font-roboto">
       <div
         className="bg-black bg-opacity-70 fixed top-0 left-0 w-full h-full"
@@ -62,7 +70,8 @@ const HueModal = ({
           {buttonText}
         </button>
       </div>
-    </div>
+    </div>,
+    document.getElementById("modal-outlet") as HTMLElement
   );
 };
 
