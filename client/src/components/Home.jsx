@@ -76,7 +76,7 @@ const Home = () => {
           )}
         </div>
       </main>
-      <footer className="p-4 mt-12 bg-slate-900 text-sm">
+      <footer className="mt-12 bg-slate-900 text-sm">
         <div className="p-4 flex justify-center">
           <ul className="text-white">
             <li className="p-2"></li>
