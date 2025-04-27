@@ -250,7 +250,7 @@ const TextColorExtractor = ({
         </div>
       </HueModal>
       <div className="my-12">
-        <h1 className="text-5xl font-mono font-semibold text-center mb-2 scale-x-150 text-slate-600">
+        <h1 className="text-5xl font-mono font-semibold text-center mb-2 scale-x-110 lg:scale-x-150 text-slate-600">
           Color Palette
         </h1>
         <p className="text-center font-mono font-extralight antialiased tracking-tight text-base text-gray-400 scale-x-110">
