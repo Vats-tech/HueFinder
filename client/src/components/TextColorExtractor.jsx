@@ -238,7 +238,7 @@ const TextColorExtractor = ({
         buttonText="Got it!"
         onSubmit={() => setIsModalOpen(false)}
       >
-        <p>
+        <p className="text-xs lg:text-sm text-gray-800">
           Explore a stunning collection of color palettes with our intuitive
           color tool. Discover harmonious color combinations and bring your
           creative ideas to life with ease!
@@ -249,7 +249,7 @@ const TextColorExtractor = ({
           <div className="w-16 h-16 bg-green-800 rounded-full"></div>
         </div>
       </HueModal>
-      <div className="my-12">
+      <div className="my-12 overflow-hidden">
         <h1 className="text-5xl font-mono font-semibold text-center mb-2 scale-x-110 lg:scale-x-150 text-slate-600">
           Color Palette
         </h1>
