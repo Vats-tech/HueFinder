@@ -5,7 +5,7 @@ import ColorThief from "colorthief";
  */
 export const fetchColorPalette = (img) => {
   const colorThief = new ColorThief();
-  const palette = colorThief.getPalette(img, 12);
+  const palette = colorThief.getPalette(img, 20);
   const helper = palette.reduce((acc, curr) => {
     const r = curr[0];
     const g = curr[1];
@@ -69,5 +69,5 @@ export const hexToRgb = (hex) => {
   const g = (bigint >> 8) & 255;
   const b = bigint & 255;
 
-  return `rgb(${r}, ${g}, ${b})`;
+  return `rgb(${r},${g},${b})`;
 };

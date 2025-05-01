@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import BaseImage from "/BaseImage.jpg?url";
-import { fetchColorPalette, getHexFromRGB } from "./utils/util";
+import { fetchColorPalette, getHexFromRGB, hexToRgb } from "./utils/util";
 import Details from "./Detaills";
 import {
   DEMO_COLORS,
@@ -143,101 +143,94 @@ const ImageReader = () => {
     };
   }, [image]);
 
-  const colorPaletteStyle = (
-    <div className="p-4">
-      <h3 className="text-lg font-light font-mono">Palette</h3>
-      <div className="carousel carousel-center rounded-sm">
-        <div className="carousel-item flex-wrap">
-          {colorPalette.length > 0 &&
-            colorPalette.map((color) => {
-              return (
-                <div
-                  key={color}
-                  className="w-12 h-12"
-                  style={{
-                    backgroundColor: color,
-                  }}
-                ></div>
-              );
-            })}
-        </div>
-      </div>
+  const colorPaletteStyle = (paletteCount, className) => (
+    <div className={`flex flex-wrap justify-center ${className}`}>
+      {colorPalette.length > 0 &&
+        colorPalette.slice(0, paletteCount).map((color) => {
+          return (
+            <div
+              key={color}
+              className="w-12 h-12"
+              style={{
+                backgroundColor: color,
+              }}
+            ></div>
+          );
+        })}
     </div>
   );
 
-  return (
-    <div className="w-full mx-4 px-0 lg:px-8 my-16">
-      <HueModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        title="Image to Color Extractor"
-        subtitle="Extract colors from an image"
-        description={DESCRIPTION.IMAGE_COLOR_EXTRACTOR}
-        buttonText="Got it!"
-        onSubmit={() => setIsModalOpen(false)}
-      />
-      {enableDetailsUI && (
-        <Details
-          demoColors={DEMO_COLORS.IMG_TO_COL}
-          heading={FEATURES_LABEL.IMAGE_TO_COLOR}
-          description={DESCRIPTION.IMAGE_COLOR_EXTRACTOR}
-          hueExtractorType={HUE_EXTRACTOR_TYPE.IMAGE_COLOR_EXTRACTOR}
-        />
-      )}
-      <div className="w-full flex flex-col justify-center lg:px-14 lg:gap-20 lg:flex-row md:mt-0">
-        <div id="imageContainer" className="w-full lg:w-1/2">
-          <div className="card lg:card-side bg-base-100 shadow-xl rounded-md">
-            <div className="card-body p-0">
-              {image && (
-                <img
-                  id="colorPaletteImage"
-                  src={image}
-                  ref={imageRef}
-                  alt="Image for color extraction"
-                  className="rounded-t cursor-pointer color_extract-image"
-                  onMouseMove={handleMouseMove}
-                  onClick={handleClickOnImage}
-                />
-              )}
-              {colorPaletteStyle}
-            </div>
-          </div>
-        </div>
+  const selectedColorBlock = (color, styles) => {
+    return (
+      <div
+        className={`w-1/2 h-12 ${styles}`}
+        style={{
+          backgroundColor: `${color}`,
+        }}
+      ></div>
+    );
+  };
 
-        <div className="flex justify-between flex-col gap-10 mt-10 lg:mt-0">
-          <div className="card lg:card-side bg-base-100 shadow-xl rounded-md">
-            <div className="card-body flex justify-evenly items-center flex-col md:max-w-d p-6 md:p-6 lg:p-10 gap-4">
+  return (
+    <>
+      <div className="w-full flex justify-center items-center flex-col mx-4 px-0 lg:px-8">
+        <div className="my-12 w-full overflow-hidden">
+          <h1 className="text-5xl font-mono font-semibold text-center mb-2 scale-x-110 lg:scale-x-150 text-slate-600">
+            Image Extractor
+          </h1>
+          <p className="text-center font-mono font-extralight antialiased tracking-tight text-base text-gray-400 scale-x-110">
+            Extract colors from an image
+          </p>
+        </div>
+        <HueModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          title="Image to Color Extractor"
+          subtitle="Extract colors from an image"
+          description={DESCRIPTION.IMAGE_COLOR_EXTRACTOR}
+          buttonText="Got it!"
+          onSubmit={() => setIsModalOpen(false)}
+        >
+          <div className="mt-4">{colorPaletteStyle(8, "flex-nowrap")}</div>
+        </HueModal>
+        <div className="bg-slate-50 flex items-start flex-col md:flex-row lg:flex-row rounded-md border border-slate-200  lg:gap-16 justify-between w-fit">
+          <div className="p-4 rounded-sm max-w-[680px]">
+            {image && (
+              <img
+                src={image}
+                ref={imageRef}
+                alt="Image for color extraction"
+                className="rounded-t cursor-pointer color_extract-image w-full"
+                onMouseMove={handleMouseMove}
+                onClick={handleClickOnImage}
+              />
+            )}
+          </div>
+          <div className="flex flex-col justify-between p-4 h-full w-fit md:w-[420px] lg:w-[330px]">
+            <div className=" border-slate-200 rounded-md">
+              <div className="flex items-center mb-4 gap-[0.5px]">
+                {selectedColorBlock(color, "rounded-l-md")}
+                {selectedColorBlock(selectedColor, "rounded-r-md")}
+              </div>
               <input
                 type="file"
-                className="file-input file-input-bordered file-input-accent w-full font-mono"
+                accept="image/*"
+                className="file-input file-input-accent w-full"
                 onChange={onImageUpload}
               />
-              <div className="flex justify-between w-full">
-                <span
-                  className="w-20 min-h-3 rounded-md mr-1 md:mr-4"
-                  style={{
-                    backgroundColor: `${color}`,
-                  }}
-                ></span>
-                <span
-                  className="w-20 min-h-3 rounded-md mr-1 md:mr-4"
-                  style={{
-                    backgroundColor: `${selectedColor}`,
-                  }}
-                ></span>
-                <div
-                  id="colorDisplay"
-                  className="w-full flex justify-around items-center border-2 border-green-200 min-h-12 font-light font-mono rounded-lg"
-                >
-                  <pre>HEX {selectedColor}</pre>
-                </div>
-              </div>
             </div>
+            <div className="my-4">
+              <h3 className="text-lg font-light font-mono">All Palette</h3>
+              {colorPaletteStyle(18)}
+            </div>
+            {/* <button className="w-full bg-blue-600 p-3 rounded-md text-white self-end">
+              Palette Details
+            </button> */}
+            {/* {<ColorConverter />} */}
           </div>
-          {LIX.RGB_TO_HEX_CONVERTER && <ColorConverter />}
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -36,8 +36,8 @@ const ColorConverter = () => {
   };
 
   return (
-    <div className="card lg:card-side bg-base-100 shadow-xl rounded-md">
-      <div className="card-body p-8 items-center">
+    <div>
+      <div className="p-8 items-center">
         <h3 className="flex items-center">
           <p className="mr-2 font-mono text-lg">RGB</p>
           <span>
